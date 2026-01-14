@@ -17,7 +17,7 @@ via.on('guildMemberAdd', (member) => {
     const ruleschannelID = process.env.RULES_CHANNEL_ID;
     const roleschannelID = process.env.GETROLES_CHANNEL_ID;
     const lookbanner = new AttachmentBuilder(`./src/images/banner.jpg`);
-    const shrek = new AttachmentBuilder(`./src/images/shrek.jpg`)
+    const dance_bois = new AttachmentBuilder(`./src/images/dance_bois_welcome.gif`)
     const welcome_channel = member.guild.channels.cache.get(welcomechannelID);
 
     member.roles.add(process.env.LOCAL_ROLE_ID);
@@ -25,14 +25,14 @@ via.on('guildMemberAdd', (member) => {
 if (welcome_channel) {
     const welcomeEmbed = new EmbedBuilder()
     .setColor('DarkButNotBlack')
-    .setThumbnail('attachment://shrek.jpg')
+    .setThumbnail('attachment://dance_bois_welcome.gif')
     .setDescription(`\u200b\nPlease check out these channels:\n<#${ruleschannelID}>\n<#${roleschannelID}>\n\u200b`)
     .setImage('attachment://banner.jpg')
 
 welcome_channel.send({
     content: `**Welcome to the server** <@${member.id}>`,
     embeds: [welcomeEmbed],
-    files: [lookbanner,shrek]
+    files: [lookbanner, dance_bois]
 });
     console.log(`${member.user.username} has joined the server master`)
 }
@@ -40,19 +40,19 @@ welcome_channel.send({
 
 via.on('guildMemberRemove', (member) => {
     const welcomechannelID = process.env.WELCOME_CHANNEL_ID;
-    const cryHamster = new AttachmentBuilder(`./src/images/hamster_cri.gif`);
+    const goodbye = new AttachmentBuilder(`./src/images/perdo_goodbye.gif`);
     const welcome_channel = member.guild.channels.cache.get(welcomechannelID);
 
     if (welcome_channel) {
         const goodbyeEmbed = new EmbedBuilder()
         .setColor('DarkGrey')
-        .setThumbnail('attachment://hamster_cri.gif')
-        .setTitle(`${member.user.username} has left the server`)
-        .setDescription('Thanks for hanging out with us!')
+        .setThumbnail('attachment://perdo_goodbye.gif')
+        .setTitle(`\ub200\n${member.user.username} has left the server`)
+        .setDescription('Thanks for hanging out with us!\n\ub200')
 
 welcome_channel.send({
     embeds: [goodbyeEmbed],
-    files: [cryHamster]
+    files: [goodbye]
 });
     console.log(`${member.user.username} has left the server`)
     }
