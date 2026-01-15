@@ -1,5 +1,5 @@
 require('dotenv').config();
-const {Client, IntentsBitField, EmbedBuilder, AttachmentBuilder, GuildMember, ActivityType, Partials } = require('discord.js');
+const {Client, IntentsBitField, EmbedBuilder, AttachmentBuilder, GuildMember, ActivityType, Partials, } = require('discord.js');
 
 const via = new Client ({
     intents: [
@@ -16,7 +16,7 @@ const via = new Client ({
     ]
 });
 
-via.on('ready', (c) => {
+via.on('clientReady', (c) => {
     console.log(`${c.user.tag} is online master.`);
 });
 
@@ -95,6 +95,42 @@ via.on('messageReactionAdd', async (reaction, user) => {
             } catch (error) {
                 console.log('failed to add role')
             }
+        }
+    }
+});
+
+const mainRole = {
+    //Minecraft Main Role
+    [process.env.MC_ROLE_EMOJI_ID] : [process.env.MC_ROLE_ID, 
+        process.env.MC_ANNOUNCEMENTS_ROLE_ID, 
+        process.env.MC_PATCH_NOTES_ROLE_ID,
+        process.env.MC_IG_CHAT_ROLE_ID,
+        process.env.MC_BEDROCK_ROLE_ID,
+        process.env.MC_JAVA_ROLE_ID]
+
+    //Art Main Role
+}
+
+via.on('messageReactionRemove', async (reaction, user) => {
+    const rolemessageID = process.env.ROLE_REACT_MESSAGE_ID;
+    const mainID = mainRole[reaction.emoji.id];
+    const roleID = roleList[reaction.emoji.id];
+    const member = await reaction.message.guild.members.fetch(user.id);
+
+    if (reaction.partial) {
+        try {
+            await reaction.fetch();
+        } catch (error) {
+            console.log('RoleRemove - something went wrong master') }
+    }
+    if (reaction.message.id === rolemessageID) {
+        if (mainID) {
+            member.roles.remove(mainID)
+            console.log('role has been removed')
+        }
+        if (roleID) {
+            member.roles.remove(roleID)
+            console.log('role has been removed')
         }
     }
 });
