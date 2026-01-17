@@ -18,6 +18,12 @@ const via = new Client ({
 
 via.on('clientReady', (c) => {
     console.log(`${c.user.tag} is online master.`);
+
+    via.user.setActivity({
+    name: '🎮 Strinova',
+    type: ActivityType.Playing
+});
+
 });
 
 via.on('guildMemberAdd', (member) => {
@@ -68,12 +74,15 @@ via.on('guildMemberRemove', (member) => {
 
 const roleList = {
     // [emoji id] : role id
-    [process.env.MC_ROLE_EMOJI_ID] : process.env.MC_ROLE_ID,
-    [process.env.MC_ANNOUNCEMENTS_ROLE_EMOJI_ID] : process.env.MC_ANNOUNCEMENTS_ROLE_ID,
-    [process.env.MC_PATCH_NOTES_ROLE_EMOJI_ID] : process.env.MC_PATCH_NOTES_ROLE_ID,
-    [process.env.MC_IG_CHAT_ROLE_EMOJI_ID] : process.env.MC_IG_CHAT_ROLE_ID,
-    [process.env.MC_JAVA_EMOJI_ID] : process.env.MC_JAVA_ROLE_ID,
-    [process.env.MC_BEDROCK_EMOJI_ID] : process.env.MC_BEDROCK_ROLE_ID
+    [process.env.MC_EMOJI] : process.env.MC_ROLE,
+    [process.env.MC_ANNOUNCEMENTS_EMOJI] : process.env.MC_ANNOUNCEMENTS_ROLE,
+    [process.env.MC_PATCH_NOTES_EMOJI] : process.env.MC_PATCH_NOTES_ROLE,
+    [process.env.MC_IG_CHAT_EMOJI] : process.env.MC_IG_CHAT_ROLE,
+    [process.env.MC_JAVA_EMOJI] : process.env.MC_JAVA_ROLE,
+    [process.env.MC_BEDROCK_EMOJI] : process.env.MC_BEDROCK_ROLE,
+    [process.env.ART_EMOJI] : process.env.ART_ROLE,
+    [process.env.ART_YAPS_EMOJI] : process.env.ART_YAPS_ROLE,
+    [process.env.ART_BIBLE_EMOJI] : process.env.ART_BIBLE_ROLE
 }
 
 via.on('messageReactionAdd', async (reaction, user) => {
@@ -92,6 +101,7 @@ via.on('messageReactionAdd', async (reaction, user) => {
         if (roleId) {
             try {
                 await member.roles.add(roleId)
+                console.log('role has been added')
             } catch (error) {
                 console.log('failed to add role')
             }
@@ -101,14 +111,16 @@ via.on('messageReactionAdd', async (reaction, user) => {
 
 const mainRole = {
     //Minecraft Main Role
-    [process.env.MC_ROLE_EMOJI_ID] : [process.env.MC_ROLE_ID, 
-        process.env.MC_ANNOUNCEMENTS_ROLE_ID, 
-        process.env.MC_PATCH_NOTES_ROLE_ID,
-        process.env.MC_IG_CHAT_ROLE_ID,
-        process.env.MC_BEDROCK_ROLE_ID,
-        process.env.MC_JAVA_ROLE_ID]
-
+    [process.env.MC_EMOJI] : [process.env.MC_ROLE, 
+        process.env.MC_ANNOUNCEMENTS_ROLE, 
+        process.env.MC_PATCH_NOTES_ROLE,
+        process.env.MC_IG_CHAT_ROLE,
+        process.env.MC_BEDROCK_ROLE,
+        process.env.MC_JAVA_ROLE],
     //Art Main Role
+    [process.env.ART_EMOJI] : [process.env.ART_ROLE,
+        process.env.ART_YAPS_ROLE,
+        process.env.ART_BIBLE_ROLE]
 }
 
 via.on('messageReactionRemove', async (reaction, user) => {
