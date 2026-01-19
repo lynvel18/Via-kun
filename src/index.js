@@ -1,5 +1,5 @@
 require('dotenv').config();
-const {Client, IntentsBitField, EmbedBuilder, AttachmentBuilder, GuildMember, ActivityType, Partials} = require('discord.js');
+const {Client, IntentsBitField, EmbedBuilder, AttachmentBuilder, GuildMember, ActivityType, Partials, time, TimestampStyles} = require('discord.js');
 
 const via = new Client ({
     intents: [
@@ -74,14 +74,6 @@ via.on('guildMemberRemove', (member) => {
     }
 });
 
-
-
-
-
-
-
-
-
 const mainRole = {
     mc: process.env.MC_ROLE,
     art: process.env.ART_ROLE
@@ -121,9 +113,8 @@ const rolesID = {
     [process.env.ART_BIBLE_EMOJI]: {
         roleID: process.env.ART_BIBLE_ROLE,
         reqRole: mainRole.art
-    }
+    },
 }
-
 
 via.on('messageReactionAdd', async (reaction, user) => {
     const reactMessageID = process.env.ROLE_REACT_MESSAGE_ID;
@@ -150,26 +141,9 @@ via.on('messageReactionAdd', async (reaction, user) => {
     }
 });
 
-/*const mainRemove = {
-    [rolesID.MC_EMOJI] : [
-        rolesID.MC_ROLE,
-        rolesID.MC_ANNOUNCEMENTS_ROLE,
-        rolesID.MC_PATCH_NOTES_ROLE,
-        rolesID.MC_IG_CHAT_ROLE,
-        rolesID.MC_JAVA_ROLE,
-        rolesID.MC_BEDROCK_ROLE
-    ],
-    [rolesID.ART_EMOJI] : [
-        rolesID.ART_ROLE,
-        rolesID.ART_BIBLE_ROLE,
-        rolesID.ART_YAPS_ROLE
-    ]
-}
-*/
-
 const mainRemove = {
     //Minecraft Main Role
-    [process.env.MC_ROLE_EMOJI_ID] : [
+    [process.env.MC_EMOJI] : [
         process.env.MC_ROLE, 
         process.env.MC_ANNOUNCEMENTS_ROLE, 
         process.env.MC_PATCH_NOTES_ROLE,
@@ -204,6 +178,7 @@ via.on('messageReactionRemove', async (reaction, user) => {
          if (main) {
             await member.roles.remove(main)
             console.log('role has been removed')
+            return;
         }
         if (subroles) {
             await member.roles.remove(subroles.roleID)
