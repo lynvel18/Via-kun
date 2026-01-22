@@ -1,6 +1,6 @@
 {
   "name": "via-kun",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Via-kun is a bot made for my server AVE'S SERVER!",
   "main": "src/index.js",
   "scripts": {

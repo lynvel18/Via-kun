@@ -1,5 +1,5 @@
 require('dotenv').config();
-const {Client, IntentsBitField, EmbedBuilder, AttachmentBuilder, GuildMember, ActivityType, Partials, time, TimestampStyles} = require('discord.js');
+const {Client, IntentsBitField, EmbedBuilder, AttachmentBuilder, GuildMember, ActivityType, Partials } = require('discord.js');
 
 const via = new Client ({
     intents: [
@@ -18,9 +18,16 @@ const via = new Client ({
     ]
 });
 
-via.on('clientReady', (c) => {
-    console.log(`${c.user.tag} is online master.`);
+const timestamp = () => {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+    return `[${hours}:${minutes}:${seconds}]: `;
+}
 
+via.on('clientReady', (c) => {
+    console.log(`${timestamp()}${c.user.tag} is online master.`);
     via.user.setActivity({
     name: '🎮 Strinova',
     type: ActivityType.Playing
@@ -50,7 +57,7 @@ via.on('guildMemberAdd', (member) => {
         embeds: [welcomeEmbed],
         files: [lookbanner, dance_bois]
     });
-    console.log(`${member.user.username} has joined the server master`)
+    console.log(`${timestamp()}${member.user.username} has joined the server master`)
     }
 });
 
@@ -70,7 +77,7 @@ via.on('guildMemberRemove', (member) => {
         embeds: [goodbyeEmbed],
         files: [goodbye]
     });
-    console.log(`${member.user.username} has left the server`)
+    console.log(`${timestamp()}${member.user.username} has sadly left the server master`)
     }
 });
 
@@ -137,7 +144,7 @@ via.on('messageReactionAdd', async (reaction, user) => {
             return;
         }
         await member.roles.add(check.roleID)
-        console.log(`role has been added to ${member.user.username}`)
+        console.log(`${timestamp()}role has been added to ${member.user.username}`)
     }
 });
 
@@ -177,12 +184,12 @@ via.on('messageReactionRemove', async (reaction, user) => {
     if (reaction.message.id === reactMessageID) {
          if (main) {
             await member.roles.remove(main)
-            console.log('role has been removed')
+            console.log(`${timestamp()}role has been removed from ${member.user.username}`)
             return;
         }
         if (subroles) {
             await member.roles.remove(subroles.roleID)
-            console.log('role has been removed')
+            console.log(`${timestamp()}role has been removed from ${member.user.username}`)
         }
     }
 });
