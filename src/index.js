@@ -39,23 +39,21 @@ via.on('guildMemberAdd', (member) => {
     const welcomechannelID = process.env.WELCOME_CHANNEL_ID;
     const ruleschannelID = process.env.RULES_CHANNEL_ID;
     const roleschannelID = process.env.GETROLES_CHANNEL_ID;
-    const lookbanner = new AttachmentBuilder(`./src/images/banner.jpg`);
+    const banner = new AttachmentBuilder(`./src/images/explorershub_welcome.png`);
     const dance_bois = new AttachmentBuilder(`./src/images/dance_bois_welcome.gif`)
     const welcome_channel = member.guild.channels.cache.get(welcomechannelID);
-
-    member.roles.add(process.env.LOCAL_ROLE_ID);
 
     if (welcome_channel) {
         const welcomeEmbed = new EmbedBuilder()
         .setColor('DarkButNotBlack')
         .setThumbnail('attachment://dance_bois_welcome.gif')
         .setDescription(`\u200b\nPlease check out these channels:\n<#${ruleschannelID}>\n<#${roleschannelID}>\n\u200b`)
-        .setImage('attachment://banner.jpg')
+        .setImage('attachment://explorershub_welcome.png')
 
     welcome_channel.send({
         content: `**Welcome to the server** <@${member.id}>`,
         embeds: [welcomeEmbed],
-        files: [lookbanner, dance_bois]
+        files: [banner, dance_bois]
     });
     console.log(`${timestamp()}${member.user.username} has joined the server master`)
     }
